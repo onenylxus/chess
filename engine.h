@@ -137,3 +137,18 @@ typedef struct
 	int minorPieces[GROUP_SIZE]; // Number of minor pieces (knights and bishops) on the board for each player
 	Record history[MAX_MOVES];   // History records of each move
 } Board;
+
+//// Macros ////
+
+#define FR2POS(f, r) ((r) * 10 + (f) + 21) // Conversion from file and rank to position
+
+//// Global variables ////
+
+extern int PositionToIndex[POSITION_SIZE]; // Conversion table from position to index
+extern int IndexToPosition[INDEX_SIZE];	   // Conversion table from index to position
+
+//// External functions ////
+
+// init.c
+extern void InitConversion();
+extern void Init();
