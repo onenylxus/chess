@@ -49,3 +49,11 @@ void ConversionTest()
 	// Print message
 	printf("Conversion tests passed\n");
 }
+
+// Main test function
+void Test()
+{
+#ifdef DEBUG
+	ConversionTest();
+#endif
+}
