@@ -5,6 +5,8 @@
 // Define global variables
 int PositionToIndex[POSITION_SIZE];
 int IndexToPosition[INDEX_SIZE];
+u64 SetMask[INDEX_SIZE];
+u64 ClearMask[INDEX_SIZE];
 
 // Initialize conversions
 void InitConversion()
@@ -36,8 +38,20 @@ void InitConversion()
 	}
 }
 
+// Initialize bit masks
+void InitBitMask()
+{
+	// Fill bit masks
+	for (int i = 0; i < INDEX_SIZE; ++i)
+	{
+		SetMask[i] = (1ULL << i);
+		ClearMask[i] = ~SetMask[i];
+	}
+}
+
 // Initialize function
 void Init()
 {
 	InitConversion();
+	InitBitMask();
 }
