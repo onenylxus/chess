@@ -5,12 +5,8 @@
 // Main function
 int main()
 {
-	// Initialize
-	Init();
+	Init();   // Initialize
+	Test();   // Run tests
 
-	// Run tests
-	Test();
-
-	// Return
-	return 0;
+	return 0; // Return
 }

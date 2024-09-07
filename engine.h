@@ -10,7 +10,7 @@
 #define POSITION_SIZE 120   // Position size (12x10 virtual board)
 #define INDEX_SIZE 64       // Index size (8x8 real board)
 #define PLAYER_SIZE 2       // Number of players (white and black)
-#define GROUP_SIZE 3        // Number of groups (white, black and both)
+#define ROLE_SIZE 3         // Number of roles (white, black and both)
 #define PIECE_SIZE 13       // Number of piece types
 #define CASTLE_SIZE 16      // Castle permutation size
 #define MAX_MOVES 2048      // Maximum number of moves
@@ -124,7 +124,7 @@ typedef struct
 typedef struct
 {
 	int pieces[POSITION_SIZE];             // Piece type of each position
-	u64 pawns[GROUP_SIZE];                 // Pawn positions in bit for each player and combined
+	u64 pawns[ROLE_SIZE];                 // Pawn positions in bit for each role
 	int kings[PLAYER_SIZE];                // King positions for each player
 	int side;                              // Current player side to move
 	int castle;                            // Castle permutation
@@ -134,9 +134,9 @@ typedef struct
 	int historyPly;                        // History ply
 	u64 positionKey;                       // Unique key for position
 	int counts[PIECE_SIZE];                // Total number of pieces on the board
-	int bigPieces[GROUP_SIZE];             // Number of big pieces (not pawns) on the board for each player and combined
-	int majorPieces[GROUP_SIZE];           // Number of major pieces (rooks and queens) on the board for each player and combined
-	int minorPieces[GROUP_SIZE];           // Number of minor pieces (knights and bishops) on the board for each player and combined
+	int bigPieces[ROLE_SIZE];             // Number of big pieces (not pawns) on the board for each role
+	int majorPieces[ROLE_SIZE];           // Number of major pieces (rooks and queens) on the board for each role
+	int minorPieces[ROLE_SIZE];           // Number of minor pieces (knights and bishops) on the board for each role
 	int pieceList[PIECE_SIZE][MAX_PIECES]; // Position of each piece sorted by piece type
 	Record history[MAX_MOVES];             // History records of each move
 } Board;
@@ -187,8 +187,11 @@ extern int PopBit(u64 *bb);
 extern int CountBit(u64 bb);
 extern void PrintBitboard(u64 bb);
 
-// hashkey.c
+// hash.c
 extern u64 GeneratePositionKey(const Board *board);
+
+// board.c
+extern void ResetBoard(Board *board);
 
 // tests.c
 extern void Test();

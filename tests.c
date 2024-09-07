@@ -37,13 +37,13 @@ void ConversionTest()
 	// Test position table
 	for (int i = 0; i < POSITION_SIZE; ++i)
 	{
-		ASSERT(PositionToIndex[i] == positionTable[i]);
+		ASSERT(POS2IDX(i) == positionTable[i]);
 	}
 
 	// Test index table
 	for (int i = 0; i < INDEX_SIZE; ++i)
 	{
-		ASSERT(IndexToPosition[i] == indexTable[i]);
+		ASSERT(IDX2POS(i) == indexTable[i]);
 	}
 
 	// Print message
