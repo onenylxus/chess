@@ -17,6 +17,8 @@
 #define MAX_CHOICES 256     // Maximum number of choices
 #define MAX_PIECES 10       // Maximum number of pieces of same type
 
+#define FEN_SETUP "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" // Setup state in FEN notation
+
 //// Type Definitions ////
 
 typedef unsigned int u32;
@@ -191,6 +193,7 @@ extern void PrintBitboard(u64 bb);
 extern u64 GeneratePositionKey(const Board *board);
 
 // board.c
+extern int ParseFEN(char *fen, Board *board);
 extern void ResetBoard(Board *board);
 
 // tests.c
