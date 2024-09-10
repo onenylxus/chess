@@ -37,18 +37,18 @@ int CountBit(u64 bb)
 // Print bitboard
 void PrintBitboard(u64 bb)
 {
-	// Define variable
+	// Define variables
 	int position = XX;
 	int index = 0;
 
 	// Print
 	printf("Bitboard:\n");
 	printf("+---+---+---+---+---+---+---+---+\n");
-	for (int r = RANK_8; r >= RANK_1; --r)
+	for (int rank = RANK_8; rank >= RANK_1; --rank)
 	{
-		for (int f = FILE_A; f <= FILE_H; ++f)
+		for (int file = FILE_A; file <= FILE_H; ++file)
 		{
-			position = FR2POS(f, r);
+			position = FR2POS(file, rank);
 			index = POS2IDX(position);
 			printf(((1ULL << index) & bb) ? "| x " : "| - ");
 		}

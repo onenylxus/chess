@@ -2,6 +2,11 @@
 
 //// Board ////
 
+const char PieceChar[] = ".PNBRQKpnbrqk"; // Piece characters
+const char SideChar[] = "wb-";            // Side characters
+const char FileChar[] = "abcdefgh";       // File characters
+const char RankChar[] = "12345678";       // Rank characters
+
 // Parse FEN notation
 int ParseFEN(char *fen, Board *board)
 {
@@ -18,6 +23,9 @@ int ParseFEN(char *fen, Board *board)
 
 	while (rank >= RANK_1 && *fen)
 	{
+		// Reset count
+		count = 1;
+
 		// Read character
 		switch (*fen)
 		{
@@ -98,6 +106,7 @@ int ParseFEN(char *fen, Board *board)
 		fen++;
 	}
 	ASSERT(board->castle >= 0 && board->castle < CASTLE_SIZE);
+	fen++;
 
 	// Determine en passant
 	if (*fen != '-')
@@ -110,7 +119,7 @@ int ParseFEN(char *fen, Board *board)
 	}
 
 	// Generate position key
-	GeneratePositionKey(board);
+	board->positionKey = GeneratePositionKey(board);
 	return 0;
 }
 
@@ -162,4 +171,46 @@ void ResetBoard(Board *board)
 		board->history[i].fiftyMoves = 0;
 		board->history[i].positionKey = 0ULL;
 	}
+}
+
+// Print board
+void PrintBoard(const Board *board)
+{
+	// Define variables
+	int position = XX;
+	int piece = EMPTY;
+	char castleWhiteKing = board->castle & CASTLE_WHITE_KING ? 'K' : '-';
+	char castleWhiteQueen = board->castle & CASTLE_WHITE_QUEEN ? 'Q' : '-';
+	char castleBlackKing = board->castle & CASTLE_BLACK_KING ? 'k' : '-';
+	char castleBlackQueen = board->castle & CASTLE_BLACK_QUEEN ? 'q' : '-';
+
+	// Print
+	printf("Board:\n");
+	printf("  +---+---+---+---+---+---+---+---+\n");
+	for (int rank = RANK_8; rank >= RANK_1; --rank)
+	{
+		printf("%d ", rank + 1);
+		for (int file = FILE_A; file <= FILE_H; ++file)
+		{
+			position = FR2POS(file, rank);
+			piece = board->pieces[position];
+			printf("| %c ", PieceChar[piece]);
+		}
+		printf("|\n");
+		printf("  +---+---+---+---+---+---+---+---+\n");
+	}
+
+	printf("  ");
+	for (int file = FILE_A; file <= FILE_H; ++file)
+	{
+		printf("  %c ", 'a' + file);
+	}
+	printf("\n");
+
+	printf("\n");
+	printf("Side: %c\n", SideChar[board->side]);
+	printf("En passant: %d\n", board->enPassant);
+	printf("Castle: %c%c%c%c\n", castleWhiteKing, castleWhiteQueen, castleBlackKing, castleBlackQueen);
+	printf("Position key: %llX\n", board->positionKey);
+	printf("\n");
 }

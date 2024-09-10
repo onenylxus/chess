@@ -3,12 +3,12 @@
 //// Init ////
 
 // Random u64 value generator
-#define RAND_U64 (             \
-	(u64)rand() +              \
-	(u64)rand() << 15 +        \
-	(u64)rand() << 30 +        \
-	(u64)rand() << 45 +        \
-	((u64)rand() & 0x0f) << 60 \
+#define RAND_U64 (               \
+	(u64)rand() +                \
+	((u64)rand() << 15) +        \
+	((u64)rand() << 30) +        \
+	((u64)rand() << 45) +        \
+	(((u64)rand() & 0x0f) << 60) \
 )
 
 // Define global variables

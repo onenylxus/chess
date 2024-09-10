@@ -110,5 +110,6 @@ void Test()
 #ifdef DEBUG
 	ConversionTest();
 	BitboardTest();
+	printf("\n");
 #endif
 }
