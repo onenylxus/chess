@@ -2,11 +2,6 @@
 
 //// Board ////
 
-const char PieceChar[] = ".PNBRQKpnbrqk"; // Piece characters
-const char SideChar[] = "wb-";            // Side characters
-const char FileChar[] = "abcdefgh";       // File characters
-const char RankChar[] = "12345678";       // Rank characters
-
 // Parse FEN notation
 int ParseFEN(char *fen, Board *board)
 {

@@ -184,6 +184,12 @@ extern u64 CastleKeys[CASTLE_SIZE];              // Hash key for each castling p
 // init.c
 extern void Init();
 
+// data.c
+extern char PieceChar[];
+extern char SideChar[];
+extern char FileChar[];
+extern char RankChar[];
+
 // bitboard.c
 extern int PopBit(u64 *bb);
 extern int CountBit(u64 bb);
