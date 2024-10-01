@@ -2,6 +2,33 @@
 
 //// Board ////
 
+// Update lists and material
+void UpdateListsAndMaterial(Board *board)
+{
+	for (int i = 0; i < POSITION_SIZE; ++i)
+	{
+		int piece = board->pieces[i];
+		if (piece != XX && piece != EMPTY)
+		{
+			int color = PieceColors[piece];
+			board->bigPieces[color] += BigPieces[piece];
+			board->majorPieces[color] += MajorPieces[piece];
+			board->minorPieces[color] += MinorPieces[piece];
+			board->materials[color] += PieceValues[piece];
+			board->pieceList[piece][board->counts[piece]++] = i;
+
+			if (piece == WHITE_KING)
+			{
+				board->kings[WHITE] = i;
+			}
+			if (piece == BLACK_KING)
+			{
+				board->kings[BLACK] = i;
+			}
+		}
+	}
+}
+
 // Parse FEN notation
 int ParseFEN(char *fen, Board *board)
 {
@@ -113,7 +140,8 @@ int ParseFEN(char *fen, Board *board)
 		board->enPassant = FR2POS(file, rank);
 	}
 
-	// Generate position key
+	// Update board
+	UpdateListsAndMaterial(board);
 	board->positionKey = GeneratePositionKey(board);
 	return 0;
 }

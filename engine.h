@@ -139,6 +139,7 @@ typedef struct
 	int bigPieces[ROLE_SIZE];              // Number of big pieces (not pawns) on the board for each role
 	int majorPieces[ROLE_SIZE];            // Number of major pieces (rooks and queens) on the board for each role
 	int minorPieces[ROLE_SIZE];            // Number of minor pieces (knights and bishops) on the board for each role
+	int materials[PIECE_SIZE];             // Material score for each player
 	int pieceList[PIECE_SIZE][MAX_PIECES]; // Position of each piece sorted by piece type
 	Record history[MAX_MOVES];             // History records of each move
 } Board;
@@ -190,6 +191,12 @@ extern char SideChar[];
 extern char FileChar[];
 extern char RankChar[];
 
+extern int BigPieces[];
+extern int MajorPieces[];
+extern int MinorPieces[];
+extern int PieceValues[];
+extern int PieceColors[];
+
 // bitboard.c
 extern int PopBit(u64 *bb);
 extern int CountBit(u64 bb);
@@ -199,6 +206,7 @@ extern void PrintBitboard(u64 bb);
 extern u64 GeneratePositionKey(const Board *board);
 
 // board.c
+extern void UpdateListsAndMaterial(Board *board);
 extern int ParseFEN(char *fen, Board *board);
 extern void ResetBoard(Board *board);
 extern void PrintBoard(const Board *board);
