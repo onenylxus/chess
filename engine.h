@@ -174,6 +174,8 @@ typedef struct
 
 extern int PositionToIndex[POSITION_SIZE];       // Conversion table from position to index
 extern int IndexToPosition[INDEX_SIZE];          // Conversion table from index to position
+extern int PositionToFile[POSITION_SIZE];        // Conversion table from position to file
+extern int PositionToRank[POSITION_SIZE];        // Conversion table from position to rank
 extern u64 SetMask[INDEX_SIZE];                  // Bitboard set bit mask value
 extern u64 ClearMask[INDEX_SIZE];                // Bitboard clear bit mask value
 extern u64 PieceKeys[PIECE_SIZE][POSITION_SIZE]; // Hash key for each piece type and position

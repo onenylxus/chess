@@ -14,6 +14,8 @@
 // Define global variables
 int PositionToIndex[POSITION_SIZE];
 int IndexToPosition[INDEX_SIZE];
+int PositionToFile[POSITION_SIZE];
+int PositionToRank[POSITION_SIZE];
 u64 SetMask[INDEX_SIZE];
 u64 ClearMask[INDEX_SIZE];
 u64 PieceKeys[PIECE_SIZE][POSITION_SIZE];
@@ -31,6 +33,8 @@ void InitConversion()
 	for (int i = 0; i < POSITION_SIZE; ++i)
 	{
 		PositionToIndex[i] = INDEX_SIZE;
+		PositionToFile[i] = INDEX_SIZE;
+		PositionToRank[i] = INDEX_SIZE;
 	}
 	for (int i = 0; i < INDEX_SIZE; ++i)
 	{
@@ -45,6 +49,8 @@ void InitConversion()
 			position = FR2POS(f, r);
 			PositionToIndex[position] = index;
 			IndexToPosition[index] = position;
+			PositionToFile[position] = f;
+			PositionToRank[position] = r;
 			index++;
 		}
 	}
