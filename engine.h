@@ -211,6 +211,7 @@ extern u64 GeneratePositionKey(const Board *board);
 extern void UpdateListsAndMaterial(Board *board);
 extern int ParseFEN(char *fen, Board *board);
 extern void ResetBoard(Board *board);
+extern int CheckBoard(const Board *board);
 extern void PrintBoard(const Board *board);
 
 // tests.c

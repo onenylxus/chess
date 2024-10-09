@@ -10,6 +10,7 @@ void UpdateListsAndMaterial(Board *board)
 		int piece = board->pieces[i];
 		if (piece != XX && piece != EMPTY)
 		{
+			// Board data
 			int color = PieceColors[piece];
 			board->bigPieces[color] += BigPieces[piece];
 			board->majorPieces[color] += MajorPieces[piece];
@@ -17,6 +18,7 @@ void UpdateListsAndMaterial(Board *board)
 			board->materials[color] += PieceValues[piece];
 			board->pieceList[piece][board->counts[piece]++] = i;
 
+			// King positions
 			if (piece == WHITE_KING)
 			{
 				board->kings[WHITE] = i;
@@ -24,6 +26,18 @@ void UpdateListsAndMaterial(Board *board)
 			if (piece == BLACK_KING)
 			{
 				board->kings[BLACK] = i;
+			}
+
+			// Pawn positions
+			if (piece == WHITE_PAWN)
+			{
+				SET(board->pawns[WHITE], POS2IDX(i));
+				SET(board->pawns[BOTH], POS2IDX(i));
+			}
+			if (piece == BLACK_PAWN)
+			{
+				SET(board->pawns[BLACK], POS2IDX(i));
+				SET(board->pawns[BOTH], POS2IDX(i));
 			}
 		}
 	}
@@ -194,6 +208,95 @@ void ResetBoard(Board *board)
 		board->history[i].fiftyMoves = 0;
 		board->history[i].positionKey = 0ULL;
 	}
+}
+
+// Check board
+int CheckBoard(const Board *board)
+{
+	// Check piece list
+	for (int piece = WHITE_PAWN; piece <= BLACK_KING; ++piece)
+	{
+		for (int count = 0; count < board->counts[piece]; ++count)
+		{
+			int position = board->pieceList[piece][count];
+			ASSERT(board->pieces[position] == piece);
+		}
+	}
+
+	// Generate temporary board
+	Board temp[1];
+	for (int index = 0; index < INDEX_SIZE; ++index)
+	{
+		int position = IDX2POS(index);
+		int piece = board->pieces[position];
+		int color = PieceColors[piece];
+
+		temp->counts[piece]++;
+		temp->bigPieces[color] += BigPieces[piece];
+		temp->majorPieces[color] += MajorPieces[piece];
+		temp->minorPieces[color] += MinorPieces[piece];
+		temp->materials[color] += PieceValues[piece];
+	}
+
+	// Check board counts
+	for (int piece = WHITE_PAWN; piece <= BLACK_KING; ++piece)
+	{
+		ASSERT(temp->counts[piece] == board->counts[piece]);
+	}
+
+	// Check bitboard counts
+	ASSERT(COUNT(board->pawns[WHITE]) == board->counts[WHITE_PAWN]);
+	ASSERT(COUNT(board->pawns[BLACK]) == board->counts[BLACK_PAWN]);
+	ASSERT(COUNT(board->pawns[BOTH]) == board->counts[WHITE_PAWN] + board->counts[BLACK_PAWN]);
+
+	// Check bitboard positions
+	int index = INDEX_SIZE;
+	temp->pawns[WHITE] = board->pawns[WHITE];
+	temp->pawns[BLACK] = board->pawns[BLACK];
+	temp->pawns[BOTH] = board->pawns[BOTH];
+
+	while (temp->pawns[WHITE])
+	{
+		index = POP(&temp->pawns[WHITE]);
+		ASSERT(board->pieces[IDX2POS(index)] == WHITE_PAWN);
+	}
+	while (temp->pawns[BLACK])
+	{
+		index = POP(&temp->pawns[BLACK]);
+		ASSERT(board->pieces[IDX2POS(index)] == BLACK_PAWN);
+	}
+	while (temp->pawns[BOTH])
+	{
+		index = POP(&temp->pawns[BOTH]);
+		ASSERT(board->pieces[IDX2POS(index)] == WHITE_PAWN || board->pieces[IDX2POS(index)] == BLACK_PAWN);
+	}
+
+	// Check board data
+	ASSERT(temp->bigPieces[WHITE] == board->bigPieces[WHITE]);
+	ASSERT(temp->bigPieces[BLACK] == board->bigPieces[BLACK]);
+	ASSERT(temp->majorPieces[WHITE] == board->majorPieces[WHITE]);
+	ASSERT(temp->majorPieces[BLACK] == board->majorPieces[BLACK]);
+	ASSERT(temp->minorPieces[WHITE] == board->minorPieces[WHITE]);
+	ASSERT(temp->minorPieces[BLACK] == board->minorPieces[BLACK]);
+	ASSERT(temp->materials[WHITE] == board->materials[WHITE]);
+	ASSERT(temp->materials[BLACK] == board->materials[BLACK]);
+
+	ASSERT(board->side == WHITE || board->side == BLACK);
+	ASSERT(GeneratePositionKey(board) == board->positionKey);
+
+	// Check en passant
+	ASSERT(
+		board->enPassant == XX ||
+		(PositionToRank[board->enPassant] == RANK_6 && board->side == WHITE) ||
+		(PositionToRank[board->enPassant] == RANK_3 && board->side == BLACK)
+	);
+
+	// Check kings
+	ASSERT(board->pieces[board->kings[WHITE]] == WHITE_KING);
+	ASSERT(board->pieces[board->kings[BLACK]] == BLACK_KING);
+
+	// Return
+	return TRUE;
 }
 
 // Print board

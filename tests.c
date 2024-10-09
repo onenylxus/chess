@@ -154,45 +154,8 @@ void BoardSetupTest()
 	Board board[1];
 	ParseFEN(FEN_SETUP, board);
 
-	// Check piece locations
-	ASSERT(board->pieces[A1] == WHITE_ROOK);
-	ASSERT(board->pieces[B1] == WHITE_KNIGHT);
-	ASSERT(board->pieces[C1] == WHITE_BISHOP);
-	ASSERT(board->pieces[D1] == WHITE_QUEEN);
-	ASSERT(board->pieces[E1] == WHITE_KING);
-	ASSERT(board->pieces[F1] == WHITE_BISHOP);
-	ASSERT(board->pieces[G1] == WHITE_KNIGHT);
-	ASSERT(board->pieces[H1] == WHITE_ROOK);
-	ASSERT(board->pieces[A2] == WHITE_PAWN);
-	ASSERT(board->pieces[B2] == WHITE_PAWN);
-	ASSERT(board->pieces[C2] == WHITE_PAWN);
-	ASSERT(board->pieces[D2] == WHITE_PAWN);
-	ASSERT(board->pieces[E2] == WHITE_PAWN);
-	ASSERT(board->pieces[F2] == WHITE_PAWN);
-	ASSERT(board->pieces[G2] == WHITE_PAWN);
-	ASSERT(board->pieces[H2] == WHITE_PAWN);
-	ASSERT(board->pieces[A7] == BLACK_PAWN);
-	ASSERT(board->pieces[B7] == BLACK_PAWN);
-	ASSERT(board->pieces[C7] == BLACK_PAWN);
-	ASSERT(board->pieces[D7] == BLACK_PAWN);
-	ASSERT(board->pieces[E7] == BLACK_PAWN);
-	ASSERT(board->pieces[F7] == BLACK_PAWN);
-	ASSERT(board->pieces[G7] == BLACK_PAWN);
-	ASSERT(board->pieces[H7] == BLACK_PAWN);
-	ASSERT(board->pieces[A8] == BLACK_ROOK);
-	ASSERT(board->pieces[B8] == BLACK_KNIGHT);
-	ASSERT(board->pieces[C8] == BLACK_BISHOP);
-	ASSERT(board->pieces[D8] == BLACK_QUEEN);
-	ASSERT(board->pieces[E8] == BLACK_KING);
-	ASSERT(board->pieces[F8] == BLACK_BISHOP);
-	ASSERT(board->pieces[G8] == BLACK_KNIGHT);
-	ASSERT(board->pieces[H8] == BLACK_ROOK);
-
-	// Check board data
-	ASSERT(board->side == WHITE);
-	ASSERT(board->castle == CASTLE_SIZE - 1);
-	ASSERT(board->enPassant == XX);
-	ASSERT(board->fiftyMoves == 0);
+	// Check board
+	CheckBoard(board);
 
 	// Print message
 	printf("Board setup tests passed\n");
