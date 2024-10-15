@@ -199,6 +199,11 @@ extern int MinorPieces[];
 extern int PieceValues[];
 extern int PieceColors[];
 
+extern int KnightPieces[];
+extern int BishopOrQueenPieces[];
+extern int RookOrQueenPieces[];
+extern int KingPieces[];
+
 // bitboard.c
 extern int PopBit(u64 *bb);
 extern int CountBit(u64 bb);
@@ -213,6 +218,9 @@ extern int ParseFEN(char *fen, Board *board);
 extern void ResetBoard(Board *board);
 extern int CheckBoard(const Board *board);
 extern void PrintBoard(const Board *board);
+
+// attack.c
+extern int IsPositionAttacked(const int position, const int side, const Board *board);
 
 // tests.c
 extern void Test();
