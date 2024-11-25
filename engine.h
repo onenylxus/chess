@@ -122,6 +122,13 @@ typedef struct
 	u64 positionKey; // Unique key for position
 } Record;
 
+// Move
+typedef struct
+{
+	int move;  // Move content
+	int score; // Score of the move
+} Move;
+
 // Board
 typedef struct
 {
@@ -162,13 +169,29 @@ typedef struct
 	}
 #endif
 
+// Conversions
 #define FR2POS(f, r) ((r) * 10 + (f) + 21) // Conversion from file and rank to position
 #define POS2IDX(p) (PositionToIndex[p])    // Conversion from position to index
 #define IDX2POS(i) (IndexToPosition[i])    // Conversion from index to position
+
+// Bit control
 #define POP(b) (PopBit(b))                 // Pop bit
 #define COUNT(b) (CountBit(b))             // Count bit
 #define SET(b, i) ((b) |= SetMask[i])      // Set bit
 #define CLEAR(b, i) ((b) &= ClearMask[i])  // Clear bit
+
+// Move construction
+#define FROMIDX(i) ((i) & 0x3f)             // From index (0-6)
+#define TOIDX(i) (((i) >> 7) & 0x3f)        // To index (7-13)
+#define CAPTUREPIECE(t) (((t) >> 16) & 0xf) // Captured piece (16-19)
+#define PROMOTEPIECE(t) (((t) >> 20) & 0xf) // Promoted piece (20-23)
+
+#define ENPASSANT 0x4000                    // En passant flag (14)
+#define PAWNSTART 0x8000                    // Pawn start flag (15)
+#define CASTLE 0x1000000                    // Castle flag (24)
+
+#define CAPTUREMASK 0xf0000                 // Capture mask
+#define PROMOTEMASK 0xf00000                // Promote mask
 
 //// Global variables ////
 
