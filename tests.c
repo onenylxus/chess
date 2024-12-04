@@ -1,3 +1,4 @@
+#include <string.h>
 #include "engine.h"
 
 //// Tests ////
@@ -161,6 +162,26 @@ void BoardSetupTest()
 	printf("Board setup tests passed\n");
 }
 
+// Print move test
+void PrintMoveTest()
+{
+	// Print message
+	printf("Running print move tests...\n");
+
+	// Setup move
+	int fromPosition = A2;
+	int toPosition = H7;
+	int move = POS2IDX(fromPosition) | POS2IDX(toPosition) << 7 | WHITE_ROOK << 16 | BLACK_QUEEN << 20;
+
+	// Test printing functions
+	ASSERT(strcmp(PrintPosition(fromPosition), "a2") == 0);
+	ASSERT(strcmp(PrintPosition(toPosition), "h7") == 0);
+	ASSERT(strcmp(PrintMove(move), "a2h7q") == 0);
+
+	// Print message
+	printf("Print move tests passed\n");
+}
+
 // Main test function
 void Test()
 {
@@ -168,6 +189,7 @@ void Test()
 	ConversionTest();
 	BitboardTest();
 	BoardSetupTest();
+	PrintMoveTest();
 	printf("\n");
 #endif
 }
