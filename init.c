@@ -11,7 +11,6 @@
 	(((u64)rand() & 0x0f) << 60) \
 )
 
-// Define global variables
 int PositionToIndex[POSITION_SIZE];
 int IndexToPosition[INDEX_SIZE];
 int PositionToFile[POSITION_SIZE];

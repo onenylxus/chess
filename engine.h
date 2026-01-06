@@ -129,6 +129,13 @@ typedef struct
 	int score; // Score of the move
 } Move;
 
+// Move list
+typedef struct
+{
+	Move moves[MAX_CHOICES]; // List of moves
+	int count;               // Number of moves
+} MoveList;
+
 // Board
 typedef struct
 {
@@ -175,10 +182,10 @@ typedef struct
 #define IDX2POS(i) (IndexToPosition[i])    // Conversion from index to position
 
 // Bit control
-#define POP(b) (PopBit(b))                 // Pop bit
-#define COUNT(b) (CountBit(b))             // Count bit
-#define SET(b, i) ((b) |= SetMask[i])      // Set bit
-#define CLEAR(b, i) ((b) &= ClearMask[i])  // Clear bit
+#define POP(b) (PopBit(b))                // Pop bit
+#define COUNT(b) (CountBit(b))            // Count bit
+#define SET(b, i) ((b) |= SetMask[i])     // Set bit
+#define CLEAR(b, i) ((b) &= ClearMask[i]) // Clear bit
 
 // Move construction
 #define FROMIDX(i) ((i) & 0x3f)             // From index (0-6)
@@ -248,6 +255,12 @@ extern int IsPositionAttacked(const int position, const int side, const Board *b
 // io.c
 extern char *PrintPosition(const int position);
 extern char *PrintMove(const int move);
+
+// movegen.c
+extern void AddQuietMove(const Board *board, int move, MoveList *list);
+extern void AddCaptureMove(const Board *board, int move, MoveList *list);
+extern void AddEnPassantMove(const Board *board, int move, MoveList *list);
+extern void GenerateAllMoves(const Board *board, MoveList *list);
 
 // tests.c
 extern void Test();
