@@ -11,9 +11,10 @@ const int QueenAttackDirections[8] = { -11, -10, -9, -1, 1, 9, 10, 11 };
 // Check if position is attacked
 int IsPositionAttacked(const int position, const int side, const Board *board)
 {
-	// Assert
-	ASSERT(position >= 0 && position < POSITION_SIZE);
-	ASSERT(side == WHITE || side == BLACK);
+	// Assertions
+	ASSERT(IsPositionOnBoard(position));
+	ASSERT(IsSideValid(side));
+	ASSERT(CheckBoard(board));
 
 	// Pawn attacks
 	if (side == WHITE && (board->pieces[position - 11] == WHITE_PAWN || board->pieces[position - 9] == WHITE_PAWN))

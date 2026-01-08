@@ -262,5 +262,12 @@ extern void AddCaptureMove(const Board *board, int move, MoveList *list);
 extern void AddEnPassantMove(const Board *board, int move, MoveList *list);
 extern void GenerateAllMoves(const Board *board, MoveList *list);
 
+// validate.c
+extern int IsPositionOnBoard(const int position);
+extern int IsSideValid(const int side);
+extern int IsFileRankValid(const int fr);
+extern int IsPieceTypeValidEmpty(const int piece);
+extern int IsPieceTypeValid(const int piece);
+
 // tests.c
 extern void Test();
