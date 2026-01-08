@@ -182,6 +182,27 @@ void PrintMoveTest()
 	printf("Print move tests passed\n");
 }
 
+// Move generation test
+void MoveGenerationTest()
+{
+	// Print message
+	printf("Running move generation tests...\n");
+
+	// Setup board
+	Board board[1];
+	ParseFEN(FEN_SETUP, board);
+
+	// Setup move list
+	MoveList list[1];
+	GenerateAllMoves(board, list);
+
+	// Test move count
+	ASSERT(list->count == 16);
+
+	// Print message
+	printf("Move generation tests passed\n");
+}
+
 // Main test function
 void Test()
 {
@@ -190,6 +211,7 @@ void Test()
 	BitboardTest();
 	BoardSetupTest();
 	PrintMoveTest();
+	MoveGenerationTest();
 	printf("\n");
 #endif
 }

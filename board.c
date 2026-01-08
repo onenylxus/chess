@@ -127,10 +127,7 @@ int ParseFEN(char *fen, Board *board)
 	// Determine castling permission
 	for (int i = 0; i < 4; ++i)
 	{
-		if (*fen == ' ')
-		{
-			break;
-		}
+		if (*fen == ' ') break;
 		switch (*fen)
 		{
 			case 'K': board->castle |= CASTLE_WHITE_KING; break;
@@ -185,6 +182,7 @@ void ResetBoard(Board *board)
 	for (int i = 0; i < PIECE_SIZE; ++i)
 	{
 		board->counts[i] = 0;
+		board->materials[i] = 0;
 	}
 
 	// Reset king positions for each player
@@ -333,10 +331,12 @@ void PrintBoard(const Board *board)
 	}
 	printf("\n");
 
+#ifdef DEBUG
 	printf("\n");
 	printf("Side: %c\n", SideChar[board->side]);
 	printf("En passant: %d\n", board->enPassant);
 	printf("Castle: %c%c%c%c\n", castleWhiteKing, castleWhiteQueen, castleBlackKing, castleBlackQueen);
 	printf("Position key: %llX\n", board->positionKey);
 	printf("\n");
+#endif
 }
