@@ -5,6 +5,12 @@
 
 //// Move Generation ////
 
+int SlidingLoopPieces[8] = {WHITE_BISHOP, WHITE_ROOK, WHITE_QUEEN, EMPTY, BLACK_BISHOP, BLACK_ROOK, BLACK_QUEEN, EMPTY};
+int SlidingLoopSideIndex[2] = {0, 4};
+
+int NonSlidingLoopPieces[6] = {WHITE_KNIGHT, WHITE_KING, EMPTY, BLACK_KNIGHT, BLACK_KING, EMPTY};
+int NonSlidingLoopSideIndex[2] = {0, 3};
+
 // Add quiet (non-capture) move to move list
 void AddQuietMove(const Board *board, int move, MoveList *list)
 {
@@ -32,6 +38,11 @@ void AddEnPassantMove(const Board *board, int move, MoveList *list)
 // Add white pawn capture moves to move list
 void AddWhitePawnCaptureMove(const Board *board, int from, int to, int captured, MoveList *list)
 {
+	// Assertions
+	ASSERT(IsPieceTypeValidEmpty(captured));
+	ASSERT(IsPositionOnBoard(from));
+	ASSERT(IsPositionOnBoard(to));
+
 	// Promotion captures
 	if (PositionToRank[from] == RANK_7)
 	{
@@ -49,6 +60,10 @@ void AddWhitePawnCaptureMove(const Board *board, int from, int to, int captured,
 // Add white pawn quiet moves to move list
 void AddWhitePawnQuietMove(const Board *board, int from, int to, MoveList *list)
 {
+	// Assertions
+	ASSERT(IsPositionOnBoard(from));
+	ASSERT(IsPositionOnBoard(to));
+
 	// Promotion moves
 	if (PositionToRank[from] == RANK_7)
 	{
@@ -66,6 +81,11 @@ void AddWhitePawnQuietMove(const Board *board, int from, int to, MoveList *list)
 // Add black pawn capture moves to move list
 void AddBlackPawnCaptureMove(const Board *board, int from, int to, int captured, MoveList *list)
 {
+	// Assertions
+	ASSERT(IsPieceTypeValidEmpty(captured));
+	ASSERT(IsPositionOnBoard(from));
+	ASSERT(IsPositionOnBoard(to));
+
 	// Promotion captures
 	if (PositionToRank[from] == RANK_2)
 	{
@@ -83,6 +103,10 @@ void AddBlackPawnCaptureMove(const Board *board, int from, int to, int captured,
 // Add black pawn quiet moves to move list
 void AddBlackPawnQuietMove(const Board *board, int from, int to, MoveList *list)
 {
+	// Assertions
+	ASSERT(IsPositionOnBoard(from));
+	ASSERT(IsPositionOnBoard(to));
+
 	// Promotion moves
 	if (PositionToRank[from] == RANK_2)
 	{
@@ -109,6 +133,9 @@ void GenerateAllMoves(const Board *board, MoveList *list)
 	int side = board->side;
 	int pos = 0;
 	int temp = 0;
+	int dir = 0;
+	int index = 0;
+	int pieceIndex = 0;
 
 	if (side == WHITE)
 	{
@@ -189,5 +216,27 @@ void GenerateAllMoves(const Board *board, MoveList *list)
 				AddCaptureMove(board, MOVE(pos, pos - 11, EMPTY, EMPTY, ENPASSANT), list);
 			}
 		}
+	}
+
+	// Slider pieces
+	pieceIndex = SlidingLoopSideIndex[side];
+	piece = SlidingLoopPieces[pieceIndex++];
+
+	while (piece != EMPTY)
+	{
+		ASSERT(IsPieceTypeValid(piece));
+
+		piece = SlidingLoopPieces[pieceIndex++];
+	}
+
+	// Non-slider pieces
+	pieceIndex = NonSlidingLoopSideIndex[side];
+	piece = NonSlidingLoopPieces[pieceIndex++];
+
+	while (piece != EMPTY)
+	{
+		ASSERT(IsPieceTypeValid(piece));
+
+		piece = NonSlidingLoopPieces[pieceIndex++];
 	}
 }

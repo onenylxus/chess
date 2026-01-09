@@ -177,12 +177,12 @@ void ResetBoard(Board *board)
 		board->bigPieces[i] = 0;
 		board->majorPieces[i] = 0;
 		board->minorPieces[i] = 0;
+		board->materials[i] = 0;
 		board->pawns[i] = 0ULL;
 	}
 	for (int i = 0; i < PIECE_SIZE; ++i)
 	{
 		board->counts[i] = 0;
-		board->materials[i] = 0;
 	}
 
 	// Reset king positions for each player

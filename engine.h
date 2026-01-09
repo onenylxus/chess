@@ -233,6 +233,7 @@ extern int KnightPieces[];
 extern int BishopOrQueenPieces[];
 extern int RookOrQueenPieces[];
 extern int KingPieces[];
+extern int SlidingPieces[];
 
 // bitboard.c
 extern int PopBit(u64 *bb);
