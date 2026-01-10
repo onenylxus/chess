@@ -5,11 +5,47 @@
 
 //// Move Generation ////
 
+// Loop for sliding pieces
 int SlidingLoopPieces[8] = {WHITE_BISHOP, WHITE_ROOK, WHITE_QUEEN, EMPTY, BLACK_BISHOP, BLACK_ROOK, BLACK_QUEEN, EMPTY};
 int SlidingLoopSideIndex[2] = {0, 4};
 
+// Loop for non-sliding pieces
 int NonSlidingLoopPieces[6] = {WHITE_KNIGHT, WHITE_KING, EMPTY, BLACK_KNIGHT, BLACK_KING, EMPTY};
 int NonSlidingLoopSideIndex[2] = {0, 3};
+
+// Piece directions
+int PieceDirections[PIECE_SIZE][8] = {
+	{  0,   0,   0,   0,   0,   0,   0,   0}, // EMPTY
+	{  0,   0,   0,   0,   0,   0,   0,   0}, // WHITE_PAWN
+	{-21, -19, -12,  -8,   8,  12,  19,  21}, // WHITE_KNIGHT
+	{-11,  -9,   9,  11,   0,   0,   0,   0}, // WHITE_BISHOP
+	{-10,  -1,   1,  10,   0,   0,   0,   0}, // WHITE_ROOK
+	{-11, -10,  -9,  -1,   1,   9,  10,  11}, // WHITE_QUEEN
+	{-11, -10,  -9,  -1,   1,   9,  10,  11}, // WHITE_KING
+	{  0,   0,   0,   0,   0,   0,   0,   0}, // BLACK_PAWN
+	{-21, -19, -12,  -8,   8,  12,  19,  21}, // BLACK_KNIGHT
+	{-11,  -9,   9,  11,   0,   0,   0,   0}, // BLACK_BISHOP
+	{-10,  -1,   1,  10,   0,   0,   0,   0}, // BLACK_ROOK
+	{-11, -10,  -9,  -1,   1,   9,  10,  11}, // BLACK_QUEEN
+	{-11, -10,  -9,  -1,   1,   9,  10,  11}, // BLACK_KING
+};
+
+// Number of directions
+int NumDirections[PIECE_SIZE] = {
+	0, // EMPTY
+	0, // WHITE_PAWN
+	8, // WHITE_KNIGHT
+	4, // WHITE_BISHOP
+	4, // WHITE_ROOK
+	8, // WHITE_QUEEN
+	8, // WHITE_KING
+	0, // BLACK_PAWN
+	8, // BLACK_KNIGHT
+	4, // BLACK_BISHOP
+	4, // BLACK_ROOK
+	8, // BLACK_QUEEN
+	8  // BLACK_KING
+};
 
 // Add quiet (non-capture) move to move list
 void AddQuietMove(const Board *board, int move, MoveList *list)
@@ -131,6 +167,7 @@ void GenerateAllMoves(const Board *board, MoveList *list)
 
 	int piece = EMPTY;
 	int side = board->side;
+	int count = 0;
 	int pos = 0;
 	int temp = 0;
 	int dir = 0;
@@ -140,7 +177,7 @@ void GenerateAllMoves(const Board *board, MoveList *list)
 	if (side == WHITE)
 	{
 		// White pawns
-		for (int count = 0; count < board->counts[WHITE_PAWN]; ++count)
+		for (count = 0; count < board->counts[WHITE_PAWN]; ++count)
 		{
 			pos = board->pieceList[WHITE_PAWN][count];
 			ASSERT(IsPositionOnBoard(pos));
@@ -176,11 +213,35 @@ void GenerateAllMoves(const Board *board, MoveList *list)
 				AddCaptureMove(board, MOVE(pos, pos + 11, EMPTY, EMPTY, ENPASSANT), list);
 			}
 		}
+
+		// White king castling
+		if (board->castle & CASTLE_WHITE_KING)
+		{
+			if (board->pieces[F1] == EMPTY && board->pieces[G1] == EMPTY)
+			{
+				if (!IsPositionAttacked(E1, BLACK, board) && !IsPositionAttacked(F1, BLACK, board))
+				{
+					AddQuietMove(board, MOVE(E1, G1, EMPTY, EMPTY, CASTLE), list);
+				}
+			}
+		}
+
+		// White queen castling
+		if (board->castle & CASTLE_WHITE_QUEEN)
+		{
+			if (board->pieces[B1] == EMPTY && board->pieces[C1] == EMPTY && board->pieces[D1] == EMPTY)
+			{
+				if (!IsPositionAttacked(D1, BLACK, board) && !IsPositionAttacked(E1, BLACK, board))
+				{
+					AddQuietMove(board, MOVE(E1, C1, EMPTY, EMPTY, CASTLE), list);
+				}
+			}
+		}
 	}
 	else
 	{
 		// Black pawns
-		for (int count = 0; count < board->counts[BLACK_PAWN]; ++count)
+		for (count = 0; count < board->counts[BLACK_PAWN]; ++count)
 		{
 			pos = board->pieceList[BLACK_PAWN][count];
 			ASSERT(IsPositionOnBoard(pos));
@@ -216,6 +277,30 @@ void GenerateAllMoves(const Board *board, MoveList *list)
 				AddCaptureMove(board, MOVE(pos, pos - 11, EMPTY, EMPTY, ENPASSANT), list);
 			}
 		}
+
+		// Black king castling
+		if (board->castle & CASTLE_BLACK_KING)
+		{
+			if (board->pieces[F8] == EMPTY && board->pieces[G8] == EMPTY)
+			{
+				if (!IsPositionAttacked(E8, WHITE, board) && !IsPositionAttacked(F8, WHITE, board))
+				{
+					AddQuietMove(board, MOVE(E8, G8, EMPTY, EMPTY, CASTLE), list);
+				}
+			}
+		}
+
+		// Black queen castling
+		if (board->castle & CASTLE_BLACK_QUEEN)
+		{
+			if (board->pieces[B8] == EMPTY && board->pieces[C8] == EMPTY && board->pieces[D8] == EMPTY)
+			{
+				if (!IsPositionAttacked(D8, WHITE, board) && !IsPositionAttacked(E8, WHITE, board))
+				{
+					AddQuietMove(board, MOVE(E8, C8, EMPTY, EMPTY, CASTLE), list);
+				}
+			}
+		}
 	}
 
 	// Slider pieces
@@ -225,6 +310,35 @@ void GenerateAllMoves(const Board *board, MoveList *list)
 	while (piece != EMPTY)
 	{
 		ASSERT(IsPieceTypeValid(piece));
+
+		for (count = 0; count < board->counts[piece]; ++count)
+		{
+			pos = board->pieceList[piece][count];
+			ASSERT(IsPositionOnBoard(pos));
+
+			for (index = 0; index < NumDirections[piece]; ++index)
+			{
+				dir = PieceDirections[piece][index];
+				temp = pos + dir;
+
+				while (!ISOFFBOARD(temp))
+				{
+					// Check capture or blocked
+					if (board->pieces[temp] != EMPTY)
+					{
+						if (PieceColors[board->pieces[temp]] == side ^ 1)
+						{
+							AddCaptureMove(board, MOVE(pos, temp, board->pieces[temp], EMPTY, 0), list);
+						}
+						break;
+					}
+
+					// Move
+					AddQuietMove(board, MOVE(pos, temp, EMPTY, EMPTY, 0), list);
+					temp += dir;
+				}
+			}
+		}
 
 		piece = SlidingLoopPieces[pieceIndex++];
 	}
@@ -236,6 +350,36 @@ void GenerateAllMoves(const Board *board, MoveList *list)
 	while (piece != EMPTY)
 	{
 		ASSERT(IsPieceTypeValid(piece));
+
+		for (count = 0; count < board->counts[piece]; ++count)
+		{
+			pos = board->pieceList[piece][count];
+			ASSERT(IsPositionOnBoard(pos));
+
+			for (index = 0; index < NumDirections[piece]; ++index)
+			{
+				dir = PieceDirections[piece][index];
+				temp = pos + dir;
+
+				if (ISOFFBOARD(temp))
+				{
+					continue;
+				}
+
+				// Check capture or blocked
+				if (board->pieces[temp] != EMPTY)
+				{
+					if (PieceColors[board->pieces[temp]] == side ^ 1)
+					{
+						AddCaptureMove(board, MOVE(pos, temp, board->pieces[temp], EMPTY, 0), list);
+					}
+					continue;
+				}
+
+				// Move
+				AddQuietMove(board, MOVE(pos, temp, EMPTY, EMPTY, 0), list);
+			}
+		}
 
 		piece = NonSlidingLoopPieces[pieceIndex++];
 	}

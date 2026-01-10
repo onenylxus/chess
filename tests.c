@@ -197,7 +197,7 @@ void MoveGenerationTest()
 	GenerateAllMoves(board, list);
 
 	// Test move count
-	ASSERT(list->count == 16);
+	ASSERT(list->count == 20);
 
 	// Print message
 	printf("Move generation tests passed\n");

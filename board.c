@@ -171,15 +171,22 @@ void ResetBoard(Board *board)
 		board->pieces[position] = EMPTY;
 	}
 
-	// Reset piece counters of each role
-	for (int i = 0; i < ROLE_SIZE; ++i)
+	// Reset piece counters of each side
+	for (int i = 0; i < 2; ++i)
 	{
 		board->bigPieces[i] = 0;
 		board->majorPieces[i] = 0;
 		board->minorPieces[i] = 0;
 		board->materials[i] = 0;
+	}
+
+	// Reset piece counters of each role
+	for (int i = 0; i < ROLE_SIZE; ++i)
+	{
 		board->pawns[i] = 0ULL;
 	}
+
+	// Reset piece counts
 	for (int i = 0; i < PIECE_SIZE; ++i)
 	{
 		board->counts[i] = 0;
