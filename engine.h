@@ -258,9 +258,6 @@ extern char *PrintPosition(const int position);
 extern char *PrintMove(const int move);
 
 // movegen.c
-extern void AddQuietMove(const Board *board, int move, MoveList *list);
-extern void AddCaptureMove(const Board *board, int move, MoveList *list);
-extern void AddEnPassantMove(const Board *board, int move, MoveList *list);
 extern void GenerateAllMoves(const Board *board, MoveList *list);
 
 // validate.c

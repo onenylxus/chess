@@ -6,15 +6,15 @@
 //// Move Generation ////
 
 // Loop for sliding pieces
-int SlidingLoopPieces[8] = {WHITE_BISHOP, WHITE_ROOK, WHITE_QUEEN, EMPTY, BLACK_BISHOP, BLACK_ROOK, BLACK_QUEEN, EMPTY};
-int SlidingLoopSideIndex[2] = {0, 4};
+const int SlidingLoopPieces[8] = {WHITE_BISHOP, WHITE_ROOK, WHITE_QUEEN, EMPTY, BLACK_BISHOP, BLACK_ROOK, BLACK_QUEEN, EMPTY};
+const int SlidingLoopSideIndex[2] = {0, 4};
 
 // Loop for non-sliding pieces
-int NonSlidingLoopPieces[6] = {WHITE_KNIGHT, WHITE_KING, EMPTY, BLACK_KNIGHT, BLACK_KING, EMPTY};
-int NonSlidingLoopSideIndex[2] = {0, 3};
+const int NonSlidingLoopPieces[6] = {WHITE_KNIGHT, WHITE_KING, EMPTY, BLACK_KNIGHT, BLACK_KING, EMPTY};
+const int NonSlidingLoopSideIndex[2] = {0, 3};
 
 // Piece directions
-int PieceDirections[PIECE_SIZE][8] = {
+const int PieceDirections[PIECE_SIZE][8] = {
 	{  0,   0,   0,   0,   0,   0,   0,   0}, // EMPTY
 	{  0,   0,   0,   0,   0,   0,   0,   0}, // WHITE_PAWN
 	{-21, -19, -12,  -8,   8,  12,  19,  21}, // WHITE_KNIGHT
@@ -31,7 +31,7 @@ int PieceDirections[PIECE_SIZE][8] = {
 };
 
 // Number of directions
-int NumDirections[PIECE_SIZE] = {
+const int NumDirections[PIECE_SIZE] = {
 	0, // EMPTY
 	0, // WHITE_PAWN
 	8, // WHITE_KNIGHT
@@ -48,7 +48,7 @@ int NumDirections[PIECE_SIZE] = {
 };
 
 // Add quiet (non-capture) move to move list
-void AddQuietMove(const Board *board, int move, MoveList *list)
+static void AddQuietMove(const Board *board, int move, MoveList *list)
 {
 	list->moves[list->count].move = move;
 	list->moves[list->count].score = 0;
@@ -56,7 +56,7 @@ void AddQuietMove(const Board *board, int move, MoveList *list)
 }
 
 // Add capture move to move list
-void AddCaptureMove(const Board *board, int move, MoveList *list)
+static void AddCaptureMove(const Board *board, int move, MoveList *list)
 {
 	list->moves[list->count].move = move;
 	list->moves[list->count].score = 0;
@@ -64,7 +64,7 @@ void AddCaptureMove(const Board *board, int move, MoveList *list)
 }
 
 // Add en passant move to move list
-void AddEnPassantMove(const Board *board, int move, MoveList *list)
+static void AddEnPassantMove(const Board *board, int move, MoveList *list)
 {
 	list->moves[list->count].move = move;
 	list->moves[list->count].score = 0;
@@ -72,7 +72,7 @@ void AddEnPassantMove(const Board *board, int move, MoveList *list)
 }
 
 // Add white pawn capture moves to move list
-void AddWhitePawnCaptureMove(const Board *board, int from, int to, int captured, MoveList *list)
+static void AddWhitePawnCaptureMove(const Board *board, int from, int to, int captured, MoveList *list)
 {
 	// Assertions
 	ASSERT(IsPieceTypeValidEmpty(captured));
@@ -94,7 +94,7 @@ void AddWhitePawnCaptureMove(const Board *board, int from, int to, int captured,
 }
 
 // Add white pawn quiet moves to move list
-void AddWhitePawnQuietMove(const Board *board, int from, int to, MoveList *list)
+static void AddWhitePawnQuietMove(const Board *board, int from, int to, MoveList *list)
 {
 	// Assertions
 	ASSERT(IsPositionOnBoard(from));
@@ -115,7 +115,7 @@ void AddWhitePawnQuietMove(const Board *board, int from, int to, MoveList *list)
 }
 
 // Add black pawn capture moves to move list
-void AddBlackPawnCaptureMove(const Board *board, int from, int to, int captured, MoveList *list)
+static void AddBlackPawnCaptureMove(const Board *board, int from, int to, int captured, MoveList *list)
 {
 	// Assertions
 	ASSERT(IsPieceTypeValidEmpty(captured));
@@ -137,7 +137,7 @@ void AddBlackPawnCaptureMove(const Board *board, int from, int to, int captured,
 }
 
 // Add black pawn quiet moves to move list
-void AddBlackPawnQuietMove(const Board *board, int from, int to, MoveList *list)
+static void AddBlackPawnQuietMove(const Board *board, int from, int to, MoveList *list)
 {
 	// Assertions
 	ASSERT(IsPositionOnBoard(from));
