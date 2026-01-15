@@ -326,7 +326,7 @@ void GenerateAllMoves(const Board *board, MoveList *list)
 					// Check capture or blocked
 					if (board->pieces[temp] != EMPTY)
 					{
-						if (PieceColors[board->pieces[temp]] == side ^ 1)
+						if (PieceColors[board->pieces[temp]] == (side ^ 1))
 						{
 							AddCaptureMove(board, MOVE(pos, temp, board->pieces[temp], EMPTY, 0), list);
 						}
@@ -369,7 +369,7 @@ void GenerateAllMoves(const Board *board, MoveList *list)
 				// Check capture or blocked
 				if (board->pieces[temp] != EMPTY)
 				{
-					if (PieceColors[board->pieces[temp]] == side ^ 1)
+					if (PieceColors[board->pieces[temp]] == (side ^ 1))
 					{
 						AddCaptureMove(board, MOVE(pos, temp, board->pieces[temp], EMPTY, 0), list);
 					}

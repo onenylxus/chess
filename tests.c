@@ -4,7 +4,7 @@
 //// Tests ////
 
 // Conversion test
-void ConversionTest()
+static void ConversionTest()
 {
 	// Print message
 	printf("Running conversion tests...\n");
@@ -92,7 +92,7 @@ void ConversionTest()
 }
 
 // Bitboard test
-void BitboardTest()
+static void BitboardTest()
 {
 	// Print message
 	printf("Running bitboard tests...\n");
@@ -146,7 +146,7 @@ void BitboardTest()
 }
 
 // Board setup test
-void BoardSetupTest()
+static void BoardSetupTest()
 {
 	// Print message
 	printf("Running board setup tests...\n");
@@ -163,7 +163,7 @@ void BoardSetupTest()
 }
 
 // Print move test
-void PrintMoveTest()
+static void PrintMoveTest()
 {
 	// Print message
 	printf("Running print move tests...\n");
@@ -183,7 +183,7 @@ void PrintMoveTest()
 }
 
 // Move generation test
-void MoveGenerationTest()
+static void MoveGenerationTest()
 {
 	// Print message
 	printf("Running move generation tests...\n");
