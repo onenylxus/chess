@@ -30,13 +30,12 @@ static void ClearPiece(const int position, Board *board)
 	int piece = board->pieces[position];
 	ASSERT(IsPieceTypeValid(piece));
 
-
 	// Hash piece to board position key
 	HASH_PIECE(piece, position);
 
 	// Remove piece from board
 	int color = PieceColors[piece];
-	
+
 	board->pieces[position] = EMPTY;
 	board->materials[color] -= PieceValues[piece];
 
@@ -58,17 +57,98 @@ static void ClearPiece(const int position, Board *board)
 		CLEAR(board->pawns[BOTH], PositionToIndex[position]);
 	}
 
-	int t_pieceNum = -1;
+	int targetIndex = -1;
 	for (int index = 0; index < board->counts[piece]; ++index)
 	{
 		if (board->pieceList[piece][index] == position)
 		{
-			t_pieceNum = index;
+			targetIndex = index;
 			break;
 		}
 	}
-	ASSERT(t_pieceNum != -1);
+	ASSERT(targetIndex != -1);
 
 	board->counts[piece]--;
-	board->pieceList[piece][t_pieceNum] = board->pieceList[piece][board->counts[piece]];
+	board->pieceList[piece][targetIndex] = board->pieceList[piece][board->counts[piece]];
+}
+
+static void AddPiece(const int position, Board *board, int piece)
+{
+	// Assertions
+	ASSERT(IsPositionOnBoard(position));
+	ASSERT(IsPieceTypeValid(piece));
+
+	// Hash piece to board position key
+	HASH_PIECE(piece, position);
+
+	// Add piece to board
+	int color = PieceColors[piece];
+
+	board->pieces[position] = piece;
+	board->materials[color] += PieceValues[piece];
+
+	if (BigPieces[piece])
+	{
+		board->bigPieces[color]++;
+		if (MajorPieces[piece])
+		{
+			board->majorPieces[color]++;
+		}
+		else
+		{
+			board->minorPieces[color]++;
+		}
+	}
+	else
+	{
+		SET(board->pawns[color], PositionToIndex[position]);
+		SET(board->pawns[BOTH], PositionToIndex[position]);
+	}
+
+	board->pieceList[piece][board->counts[piece]] = position;
+	board->counts[piece]++;
+}
+
+static void MovePiece(int from, int to, Board *board)
+{
+	// Assertions
+	ASSERT(IsPositionOnBoard(from));
+	ASSERT(IsPositionOnBoard(to));
+
+	int index = 0;
+	int piece = board->pieces[from];
+	int color = PieceColors[piece];
+
+#ifdef DEBUG
+	int targetIndex = -1;
+#endif
+
+	// Remove piece from old position
+	HASH_PIECE(piece, from);
+	board->pieces[from] = EMPTY;
+
+	// Add piece to new position
+	HASH_PIECE(piece, to);
+	board->pieces[to] = piece;
+
+	if (!BigPieces[piece])
+	{
+		CLEAR(board->pawns[color], PositionToIndex[from]);
+		CLEAR(board->pawns[BOTH], PositionToIndex[from]);
+		SET(board->pawns[color], PositionToIndex[to]);
+		SET(board->pawns[BOTH], PositionToIndex[to]);
+	}
+
+	for (index = 0; index < board->counts[piece]; ++index)
+	{
+		if (board->pieceList[piece][index] == from)
+		{
+			board->pieceList[piece][index] = to;
+#ifdef DEBUG
+			targetIndex = index;
+#endif
+			break;
+		}
+	}
+	ASSERT(targetIndex != -1);
 }
