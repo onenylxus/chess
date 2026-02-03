@@ -115,7 +115,7 @@ enum Castling
 // Record
 typedef struct
 {
-	int side;        // Current player side to move
+	int move;        // Move performed
 	int castle;      // Castle permutation
 	int enPassant;   // En passant position
 	int fiftyMoves;  // Move counter for fifty moves
@@ -223,6 +223,7 @@ extern char SideChar[];
 extern char FileChar[];
 extern char RankChar[];
 
+extern int PawnPieces[];
 extern int BigPieces[];
 extern int MajorPieces[];
 extern int MinorPieces[];
@@ -266,6 +267,10 @@ extern int IsSideValid(const int side);
 extern int IsFileRankValid(const int fr);
 extern int IsPieceTypeValidEmpty(const int piece);
 extern int IsPieceTypeValid(const int piece);
+
+// makemove.c
+extern int MakeMove(Board *board, int move);
+extern void UndoMove(Board *board);
 
 // tests.c
 extern void Test();

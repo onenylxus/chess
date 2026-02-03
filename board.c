@@ -207,7 +207,7 @@ void ResetBoard(Board *board)
 	// Reset history
 	for (int i = 0; i < MAX_MOVES; ++i)
 	{
-		board->history[i].side = BOTH;
+		board->history[i].move = 0;
 		board->history[i].castle = 0;
 		board->history[i].enPassant = XX;
 		board->history[i].fiftyMoves = 0;

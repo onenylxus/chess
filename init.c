@@ -22,7 +22,7 @@ u64 SideKey;
 u64 CastleKeys[CASTLE_SIZE];
 
 // Initialize conversions
-void InitConversion()
+static void InitConversion()
 {
 	// Define variables
 	int position = XX;
@@ -56,7 +56,7 @@ void InitConversion()
 }
 
 // Initialize bit masks
-void InitBitMask()
+static void InitBitMask()
 {
 	// Fill bit masks
 	for (int i = 0; i < INDEX_SIZE; ++i)
@@ -67,7 +67,7 @@ void InitBitMask()
 }
 
 // Initialize hash keys
-void InitHashKeys()
+static void InitHashKeys()
 {
 	// Fill hash keys
 	for (int i = 0; i < PIECE_SIZE; ++i)

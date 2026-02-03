@@ -7,6 +7,7 @@ char SideChar[] = "wb-";            // Side characters
 char FileChar[] = "abcdefgh";       // File characters
 char RankChar[] = "12345678";       // Rank characters
 
+int PawnPieces[] = {FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE};   // Pawn piece indicators
 int BigPieces[] = {FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE};            // Big piece indicators
 int MajorPieces[] = {FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE};      // Major piece indicators
 int MinorPieces[] = {FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE};    // Minor piece indicators
