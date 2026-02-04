@@ -230,10 +230,12 @@ int CheckBoard(const Board *board)
 
 	// Generate temporary board
 	Board temp[1];
+	ResetBoard(temp);
 	for (int index = 0; index < INDEX_SIZE; ++index)
 	{
 		int position = IDX2POS(index);
 		int piece = board->pieces[position];
+		if (piece == EMPTY) continue;
 		int color = PieceColors[piece];
 
 		temp->counts[piece]++;

@@ -182,25 +182,57 @@ static void PrintMoveTest()
 	printf("Print move tests passed\n");
 }
 
-// Move generation test
-static void MoveGenerationTest()
+// Perft test
+static int Perft(int depth, Board *board)
 {
-	// Print message
-	printf("Running move generation tests...\n");
+	int count = 0;
 
-	// Setup board
-	Board board[1];
-	ParseFEN(FEN_SETUP, board);
+	ASSERT(CheckBoard(board));
+
+	if (depth == 0)
+	{
+		return 1;
+	}
 
 	// Setup move list
 	MoveList list[1];
 	GenerateAllMoves(board, list);
 
-	// Test move count
-	ASSERT(list->count == 20);
+	for (int i = 0; i < list->count; ++i)
+	{
+		if (!MakeMove(board, list->moves[i].move))
+		{
+			continue;
+		}
+		count += Perft(depth - 1, board);
+		UnmakeMove(board);
+	}
+
+	return count;
+}
+
+static void PerftTest()
+{
+	// Print message
+	printf("Running perft tests...\n");
+
+	// Setup board
+	Board board[1];
+	ParseFEN(FEN_SETUP, board);
+
+	// Check board
+	CheckBoard(board);
+
+	// Test perft counts
+	int perftCounts[6] = {20, 400, 8902, 197281, 4865609, 119060324};
+	for (int depth = 1; depth <= 6; ++depth)
+	{
+		int count = Perft(depth, board);
+		ASSERT(count == perftCounts[depth - 1]);
+	}
 
 	// Print message
-	printf("Move generation tests passed\n");
+	printf("Perft tests passed\n");
 }
 
 // Main test function
@@ -211,7 +243,7 @@ void Test()
 	BitboardTest();
 	BoardSetupTest();
 	PrintMoveTest();
-	MoveGenerationTest();
+	PerftTest();
 	printf("\n");
 #endif
 }

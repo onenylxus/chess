@@ -270,7 +270,7 @@ extern int IsPieceTypeValid(const int piece);
 
 // makemove.c
 extern int MakeMove(Board *board, int move);
-extern void UndoMove(Board *board);
+extern void UnmakeMove(Board *board);
 
 // tests.c
 extern void Test();

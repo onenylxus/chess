@@ -1,6 +1,6 @@
 #include "engine.h"
 
-#define MOVE(from, to, captured, promoted, flag) ((from) | ((to) << 7) | ((captured) << 14) | ((promoted) << 20) | (flag))
+#define MOVE(from, to, captured, promoted, flag) ((POS2IDX(from)) | ((POS2IDX(to)) << 7) | ((captured) << 16) | ((promoted) << 20) | (flag))
 #define ISOFFBOARD(position) (PositionToIndex[(position)] == INDEX_SIZE)
 
 //// Move Generation ////

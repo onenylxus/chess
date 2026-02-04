@@ -158,8 +158,8 @@ int MakeMove(Board *board, int move)
 	// Assertions
 	ASSERT(CheckBoard(board));
 
-	int from = FROMIDX(move);
-	int to = TOIDX(move);
+	int from = IDX2POS(FROMIDX(move));
+	int to = IDX2POS(TOIDX(move));
 	int side = board->side;
 
 	ASSERT(IsPositionOnBoard(from));
@@ -275,14 +275,14 @@ int MakeMove(Board *board, int move)
 
 	if (IsPositionAttacked(board->kings[side], board->side, board))
 	{
-		UndoMove(board);
+		UnmakeMove(board);
 		return FALSE;
 	}
 
 	return TRUE;
 }
 
-void UndoMove(Board *board)
+void UnmakeMove(Board *board)
 {
 	// Assertions
 	ASSERT(CheckBoard(board));
@@ -292,8 +292,8 @@ void UndoMove(Board *board)
 	board->currentPly--;
 
 	int move = board->history[board->historyPly].move;
-	int from = FROMIDX(move);
-	int to = TOIDX(move);
+	int from = IDX2POS(FROMIDX(move));
+	int to = IDX2POS(TOIDX(move));
 
 	ASSERT(IsPositionOnBoard(from));
 	ASSERT(IsPositionOnBoard(to));
