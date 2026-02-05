@@ -272,5 +272,8 @@ extern int IsPieceTypeValid(const int piece);
 extern int MakeMove(Board *board, int move);
 extern void UnmakeMove(Board *board);
 
+// perft.c
+extern int Perft(int depth, Board *board, int showProgress, int expectedNodes);
+
 // tests.c
 extern void Test();

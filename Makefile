@@ -14,6 +14,7 @@ build:
 		movegen.c \
 		validate.c \
 		makemove.c \
+		perft.c \
 		tests.c \
 		-Wall \
 		-o engine

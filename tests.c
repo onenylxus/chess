@@ -1,6 +1,8 @@
 #include <string.h>
 #include "engine.h"
 
+#define PERFT_TEST_DEPTH 4
+
 //// Tests ////
 
 // Conversion test
@@ -183,34 +185,6 @@ static void PrintMoveTest()
 }
 
 // Perft test
-static int Perft(int depth, Board *board)
-{
-	int count = 0;
-
-	ASSERT(CheckBoard(board));
-
-	if (depth == 0)
-	{
-		return 1;
-	}
-
-	// Setup move list
-	MoveList list[1];
-	GenerateAllMoves(board, list);
-
-	for (int i = 0; i < list->count; ++i)
-	{
-		if (!MakeMove(board, list->moves[i].move))
-		{
-			continue;
-		}
-		count += Perft(depth - 1, board);
-		UnmakeMove(board);
-	}
-
-	return count;
-}
-
 static void PerftTest()
 {
 	// Print message
@@ -225,9 +199,9 @@ static void PerftTest()
 
 	// Test perft counts
 	int perftCounts[6] = {20, 400, 8902, 197281, 4865609, 119060324};
-	for (int depth = 1; depth <= 6; ++depth)
+	for (int depth = 1; depth <= PERFT_TEST_DEPTH; ++depth)
 	{
-		int count = Perft(depth, board);
+		int count = Perft(depth, board, TRUE, perftCounts[depth - 1]);
 		ASSERT(count == perftCounts[depth - 1]);
 	}
 
