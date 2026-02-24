@@ -111,3 +111,14 @@ char *PrintMove(const int move)
 	// Return
 	return str;
 }
+
+// Print move list
+void PrintMoveList(const MoveList *list)
+{
+	printf("Move list: (count: %d)\n", list->count);
+
+	for (int i = 0; i < list->count; ++i)
+	{
+		printf("%d: %s (score: %d)\n", i + 1, PrintMove(list->moves[i].move), list->moves[i].score);
+	}
+}

@@ -258,6 +258,7 @@ extern int IsPositionAttacked(const int position, const int side, const Board *b
 extern int ParseMove(char *pchar, Board *board);
 extern char *PrintPosition(const int position);
 extern char *PrintMove(const int move);
+extern void PrintMoveList(const MoveList *list);
 
 // movegen.c
 extern void GenerateAllMoves(const Board *board, MoveList *list);
