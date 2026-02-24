@@ -255,6 +255,7 @@ extern void PrintBoard(const Board *board);
 extern int IsPositionAttacked(const int position, const int side, const Board *board);
 
 // io.c
+extern int ParseMove(char *pchar, Board *board);
 extern char *PrintPosition(const int position);
 extern char *PrintMove(const int move);
 
