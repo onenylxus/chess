@@ -200,6 +200,8 @@ typedef struct
 #define CAPTUREMASK 0xf0000                 // Capture mask
 #define PROMOTEMASK 0xf00000                // Promote mask
 
+#define NOMOVE 0                            // No move
+
 //// Global variables ////
 
 extern int PositionToIndex[POSITION_SIZE];       // Conversion table from position to index

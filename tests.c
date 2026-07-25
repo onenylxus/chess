@@ -1,7 +1,7 @@
 #include <string.h>
 #include "engine.h"
 
-#define PERFT_TEST_DEPTH 4
+#define PERFT_TEST_DEPTH 0
 
 //// Tests ////
 

@@ -7,19 +7,19 @@ int ParseMove(char *pchar, Board *board)
 {
 	if (pchar[0] > 'h' || pchar[0] < 'a')
 	{
-		return FALSE;
+		return NOMOVE;
 	}
 	if (pchar[1] > '8' || pchar[1] < '1')
 	{
-		return FALSE;
+		return NOMOVE;
 	}
 	if (pchar[2] > 'h' || pchar[2] < 'a')
 	{
-		return FALSE;
+		return NOMOVE;
 	}
 	if (pchar[3] > '8' || pchar[3] < '1')
 	{
-		return FALSE;
+		return NOMOVE;
 	}
 
 	int from = FR2POS(pchar[0] - 'a', pchar[1] - '1');
@@ -37,7 +37,7 @@ int ParseMove(char *pchar, Board *board)
 	for (int i = 0; i < list->count; ++i)
 	{
 		move = list->moves[i].move;
-		if (FROMIDX(move) == from && TOIDX(move) == to)
+		if (IDX2POS(FROMIDX(move)) == from && IDX2POS(TOIDX(move)) == to)
 		{
 			promotePiece = PROMOTEPIECE(move);
 			if (promotePiece != EMPTY)
@@ -64,7 +64,7 @@ int ParseMove(char *pchar, Board *board)
 		}
 	}
 
-	return 0;
+	return NOMOVE;
 }
 
 // Print position
