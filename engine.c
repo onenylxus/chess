@@ -2,6 +2,19 @@
 
 //// Engine ////
 
+// Check for repetition
+int IsRepeated(const Board *board)
+{
+	for (int i = board->historyPly - board->fiftyMoves; i < board->historyPly - 1; i++)
+	{
+		if (board->history[i].positionKey == board->positionKey)
+		{
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
 // Main function
 int main()
 {
@@ -38,6 +51,10 @@ int main()
 			if (move != NOMOVE)
 			{
 				MakeMove(board, move);
+				if (IsRepeated(board))
+				{
+					printf("Search: repeated position found\n");
+				}
 			}
 			else
 			{
