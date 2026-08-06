@@ -15,6 +15,7 @@ build:
 		validate.c \
 		makemove.c \
 		perft.c \
+		misc.c \
 		tests.c \
 		-Wall \
 		-o engine

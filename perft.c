@@ -1,5 +1,4 @@
 #include <string.h>
-#include <time.h>
 #include "engine.h"
 
 #define PERFT_TABLE_SIZE (1 << 20)
@@ -66,14 +65,14 @@ int Perft(int depth, Board *board, int showProgress, int expectedNodes)
 	int totalMoves = list->count;
 	int totalCount = 0;
 
-	clock_t start = 0;
+	int start = 0;
 
 	if (showProgress)
 	{
 		perftExpectedNodes = expectedNodes;
 		perftCompletedNodes = 0ULL;
 
-		start = clock();
+		start = GetTimeInMs();
 		for (int i = 0; i < totalMoves; ++i)
 		{
 			int move = list->moves[i].move;
@@ -81,7 +80,7 @@ int Perft(int depth, Board *board, int showProgress, int expectedNodes)
 
 			if (!MakeMove(board, move))
 			{
-				double elapsed = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
+				double elapsed = (double)(GetTimeInMs() - start) / 1000.0;
 				PrintProgressBar(perftCompletedNodes, perftExpectedNodes, moveStr, elapsed, perftCompletedNodes);
 				continue;
 			}
@@ -91,7 +90,7 @@ int Perft(int depth, Board *board, int showProgress, int expectedNodes)
 
 			totalCount += c;
 
-			double elapsed = (double)(clock() - start) / (double)CLOCKS_PER_SEC;
+			double elapsed = (double)(GetTimeInMs() - start) / 1000.0;
 			PrintProgressBar(perftCompletedNodes, perftExpectedNodes, moveStr, elapsed, perftCompletedNodes);
 		}
 

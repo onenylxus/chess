@@ -279,5 +279,8 @@ extern void UnmakeMove(Board *board);
 // perft.c
 extern int Perft(int depth, Board *board, int showProgress, int expectedNodes);
 
+// misc.c
+extern int GetTimeInMs();
+
 // tests.c
 extern void Test();
