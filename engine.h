@@ -136,6 +136,20 @@ typedef struct
 	int count;               // Number of moves
 } MoveList;
 
+// Principal variation table entry
+typedef struct
+{
+	u64 positionKey; // Unique key for position
+	int move;        // Best move for the position
+} PVEntry;
+
+// Principal variation table
+typedef struct
+{
+	PVEntry *entries; // Array of entries
+	int count;        // Number of entries
+} PVTable;
+
 // Board
 typedef struct
 {
@@ -156,6 +170,7 @@ typedef struct
 	int materials[PIECE_SIZE];             // Material score for each player
 	int pieceList[PIECE_SIZE][MAX_PIECES]; // Position of each piece sorted by piece type
 	Record history[MAX_MOVES];             // History records of each move
+	PVTable pvTable[1];                    // Principal variation table
 } Board;
 
 //// Macros ////
@@ -281,6 +296,9 @@ extern int Perft(int depth, Board *board, int showProgress, int expectedNodes);
 
 // misc.c
 extern int GetTimeInMs();
+
+// pvtable.c
+extern void InitPVTable(PVTable *pvTable);
 
 // tests.c
 extern void Test();

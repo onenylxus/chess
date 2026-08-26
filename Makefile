@@ -16,6 +16,7 @@ build:
 		makemove.c \
 		perft.c \
 		misc.c \
+		pvtable.c \
 		tests.c \
 		-Wall \
 		-o engine
