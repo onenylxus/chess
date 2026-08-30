@@ -23,3 +23,25 @@ void InitPVTable(PVTable *pvTable)
 	ClearPVTable(pvTable);
 	printf("Principal variation table initialized with %d entries\n", pvTable->count);
 }
+
+void StorePVEntry(Board *board, const int move)
+{
+	int index = board->positionKey % board->pvTable->count;
+	ASSERT(index >= 0 && index < board->pvTable->count);
+
+	board->pvTable->entries[index].move = move;
+	board->pvTable->entries[index].positionKey = board->positionKey;
+}
+
+int ProbePVTable(Board *board)
+{
+	int index = board->positionKey % board->pvTable->count;
+	ASSERT(index >= 0 && index < board->pvTable->count);
+
+	if (board->pvTable->entries[index].positionKey == board->positionKey)
+	{
+		return board->pvTable->entries[index].move;
+	}
+
+	return NOMOVE;
+}

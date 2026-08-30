@@ -299,6 +299,8 @@ extern int GetTimeInMs();
 
 // pvtable.c
 extern void InitPVTable(PVTable *pvTable);
+extern void StorePVEntry(Board *board, const int move);
+extern int ProbePVTable(Board *board);
 
 // tests.c
 extern void Test();
