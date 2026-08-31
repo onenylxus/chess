@@ -26,6 +26,9 @@ int main()
 	char input[6];
 	int move = NOMOVE;
 
+	// Initialize principal variation table
+	InitPVTable(board->pvTable);
+
 	// Loop for user input
 	ParseFEN(FEN_SETUP, board);
 	while (TRUE)
@@ -50,11 +53,8 @@ int main()
 			move = ParseMove(input, board);
 			if (move != NOMOVE)
 			{
+				StorePVEntry(board, move);
 				MakeMove(board, move);
-				if (IsRepeated(board))
-				{
-					printf("Search: repeated position found\n");
-				}
 			}
 			else
 			{

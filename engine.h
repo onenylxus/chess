@@ -13,9 +13,10 @@
 #define ROLE_SIZE 3                                                          // Number of roles (white, black and both)
 #define PIECE_SIZE 13                                                        // Number of piece types
 #define CASTLE_SIZE 16                                                       // Castle permutation size
+#define MAX_PIECES 10                                                        // Maximum number of pieces of same type
 #define MAX_MOVES 2048                                                       // Maximum number of moves
 #define MAX_CHOICES 256                                                      // Maximum number of choices
-#define MAX_PIECES 10                                                        // Maximum number of pieces of same type
+#define MAX_DEPTH 64                                                         // Maximum search depth
 
 #define FEN_SETUP "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" // Setup state in FEN notation
 
@@ -171,6 +172,7 @@ typedef struct
 	int pieceList[PIECE_SIZE][MAX_PIECES]; // Position of each piece sorted by piece type
 	Record history[MAX_MOVES];             // History records of each move
 	PVTable pvTable[1];                    // Principal variation table
+	int pvArray[MAX_DEPTH];                // Principal variation array
 } Board;
 
 //// Macros ////
@@ -278,6 +280,7 @@ extern char *PrintMove(const int move);
 extern void PrintMoveList(const MoveList *list);
 
 // movegen.c
+extern int MoveExists(Board *board, const int move);
 extern void GenerateAllMoves(const Board *board, MoveList *list);
 
 // validate.c
@@ -298,6 +301,7 @@ extern int Perft(int depth, Board *board, int showProgress, int expectedNodes);
 extern int GetTimeInMs();
 
 // pvtable.c
+extern int GetPVLine(const int depth, Board *board);
 extern void InitPVTable(PVTable *pvTable);
 extern void StorePVEntry(Board *board, const int move);
 extern int ProbePVTable(Board *board);

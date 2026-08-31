@@ -5,6 +5,36 @@
 
 const int pvSize = 0x100000 * 2; // 2MB table size
 
+int GetPVLine(const int depth, Board *board)
+{
+	ASSERT(depth < MAX_DEPTH);
+
+	int move = ProbePVTable(board);
+	int count = 0;
+
+	while (move != NOMOVE && count < depth)
+	{
+		if (MoveExists(board, move))
+		{
+			MakeMove(board, move);
+			board->pvArray[count++] = move;
+		}
+		else
+		{
+			break;
+		}
+
+		move = ProbePVTable(board);
+	}
+
+	while (board->currentPly > 0)
+	{
+		UnmakeMove(board);
+	}
+
+	return count;
+}
+
 void ClearPVTable(PVTable *pvTable)
 {
 	PVEntry *entry;

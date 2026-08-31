@@ -47,6 +47,29 @@ const int NumDirections[PIECE_SIZE] = {
 	8  // BLACK_KING
 };
 
+// Check if move exists
+int MoveExists(Board *board, const int move)
+{
+	MoveList list[1];
+	GenerateAllMoves(board, list);
+
+	for (int i = 0; i < list->count; ++i)
+	{
+		if (!MakeMove(board, list->moves[i].move))
+		{
+			continue;
+		}
+		UnmakeMove(board);
+
+		if (list->moves[i].move == move)
+		{
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
+
 // Add quiet (non-capture) move to move list
 static void AddQuietMove(const Board *board, int move, MoveList *list)
 {
