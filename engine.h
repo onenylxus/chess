@@ -154,26 +154,43 @@ typedef struct
 // Board
 typedef struct
 {
-	int pieces[POSITION_SIZE];             // Piece type of each position
-	u64 pawns[ROLE_SIZE];                  // Pawn positions in bit for each role
-	int kings[PLAYER_SIZE];                // King positions for each player
-	int side;                              // Current player side to move
-	int castle;                            // Castle permutation
-	int enPassant;                         // En passant position
-	int fiftyMoves;                        // Move counter for fifty moves
-	int currentPly;                        // Current ply
-	int historyPly;                        // History ply
-	u64 positionKey;                       // Unique key for position
-	int counts[PIECE_SIZE];                // Total number of pieces on the board
-	int bigPieces[ROLE_SIZE];              // Number of big pieces (not pawns) on the board for each role
-	int majorPieces[ROLE_SIZE];            // Number of major pieces (rooks and queens) on the board for each role
-	int minorPieces[ROLE_SIZE];            // Number of minor pieces (knights and bishops) on the board for each role
-	int materials[PIECE_SIZE];             // Material score for each player
-	int pieceList[PIECE_SIZE][MAX_PIECES]; // Position of each piece sorted by piece type
-	Record history[MAX_MOVES];             // History records of each move
-	PVTable pvTable[1];                    // Principal variation table
-	int pvArray[MAX_DEPTH];                // Principal variation array
+	int pieces[POSITION_SIZE];                    // Piece type of each position
+	u64 pawns[ROLE_SIZE];                         // Pawn positions in bit for each role
+	int kings[PLAYER_SIZE];                       // King positions for each player
+	int side;                                     // Current player side to move
+	int castle;                                   // Castle permutation
+	int enPassant;                                // En passant position
+	int fiftyMoves;                               // Move counter for fifty moves
+	int currentPly;                               // Current ply
+	int historyPly;                               // History ply
+	u64 positionKey;                              // Unique key for position
+	int counts[PIECE_SIZE];                       // Total number of pieces on the board
+	int bigPieces[ROLE_SIZE];                     // Number of big pieces (not pawns) on the board for each role
+	int majorPieces[ROLE_SIZE];                   // Number of major pieces (rooks and queens) on the board for each role
+	int minorPieces[ROLE_SIZE];                   // Number of minor pieces (knights and bishops) on the board for each role
+	int materials[PIECE_SIZE];                    // Material score for each player
+	int pieceList[PIECE_SIZE][MAX_PIECES];        // Position of each piece sorted by piece type
+	Record history[MAX_MOVES];                    // History records of each move
+	PVTable pvTable[1];                           // Principal variation table
+	int pvArray[MAX_DEPTH];                       // Principal variation array
+	int searchHistory[PIECE_SIZE][POSITION_SIZE]; // Search history table
+	int searchKillers[2][MAX_DEPTH];              // Search killer moves (two moves per depth)
 } Board;
+
+// Search information
+typedef struct
+{
+	int startTime; // Start time of the search
+	int stopTime;  // Stop time of the search
+	int depth;     // Search depth
+	int depthSet;  // Target depth setting
+	int timeSet;   // Target time setting
+	int movesToGo; // Moves to go before time control
+	int infinite;  // Infinite search flag
+	long nodes;    // Number of nodes searched
+	int quit;      // Quit search flag
+	int stopped;   // Stopped search flag
+} SearchInfo;
 
 //// Macros ////
 
