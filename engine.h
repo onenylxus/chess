@@ -314,6 +314,9 @@ extern void UnmakeMove(Board *board);
 // perft.c
 extern int Perft(int depth, Board *board, int showProgress, int expectedNodes);
 
+// search.c
+extern void SearchPosition(Board *board, SearchInfo *info);
+
 // misc.c
 extern int GetTimeInMs();
 
@@ -322,6 +325,9 @@ extern int GetPVLine(const int depth, Board *board);
 extern void InitPVTable(PVTable *pvTable);
 extern void StorePVEntry(Board *board, const int move);
 extern int ProbePVTable(Board *board);
+
+// evaluate.c
+extern int EvaluatePosition(const Board *board);
 
 // tests.c
 extern void Test();
