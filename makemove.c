@@ -7,6 +7,8 @@
 
 //// Make move ////
 
+// clang-format off
+
 const int CastlePerm[POSITION_SIZE] = {
 	15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
 	15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
@@ -21,6 +23,8 @@ const int CastlePerm[POSITION_SIZE] = {
 	15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
 	15, 15, 15, 15, 15, 15, 15, 15, 15, 15
 };
+
+// clang-format on
 
 static void ClearPiece(const int position, Board *board)
 {

@@ -2,6 +2,8 @@
 
 //// Bitboard ////
 
+// clang-format off
+
 // Bit table
 const int BitTable[INDEX_SIZE] = {
 	63, 30,  3, 32, 25, 41, 22, 33,
@@ -13,6 +15,8 @@ const int BitTable[INDEX_SIZE] = {
 	 7, 39, 48, 24, 59, 14, 12, 55,
 	38, 28, 58, 20, 37, 17, 36,  8
 };
+
+// clang-format on
 
 // Pop bit from bitboard
 int PopBit(u64 *bb)

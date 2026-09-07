@@ -2,6 +2,8 @@
 
 //// Data ////
 
+// clang-format off
+
 char PieceChar[] = ".PNBRQKpnbrqk"; // Piece characters
 char SideChar[] = "wb-";            // Side characters
 char FileChar[] = "abcdefgh";       // File characters
@@ -19,3 +21,5 @@ int BishopOrQueenPieces[] = {FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, FALSE, FALS
 int RookOrQueenPieces[] = {FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE};   // Rook or queen piece indicators
 int KingPieces[] = {FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE};        // King piece indicators
 int SlidingPieces[] = {FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE};         // Sliding piece indicators
+
+// clang-format on

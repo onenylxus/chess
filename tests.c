@@ -11,6 +11,8 @@ static void ConversionTest()
 	// Print message
 	printf("Running conversion tests...\n");
 
+	// clang-format off
+
 	// Expected results
 	int positionTable[POSITION_SIZE] = {
 		64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
@@ -64,6 +66,8 @@ static void ConversionTest()
 		64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
 		64, 64, 64, 64, 64, 64, 64, 64, 64, 64
 	};
+
+	// clang-format on
 
 	// Test position table
 	for (int i = 0; i < POSITION_SIZE; ++i)

@@ -3,6 +3,8 @@
 
 //// Evaluation ////
 
+// clang-format off
+
 // Mirrored index
 const int MirroredIndex[INDEX_SIZE] = {
 	56, 57, 58, 59, 60, 61, 62, 63,
@@ -59,6 +61,8 @@ const int RookTable[INDEX_SIZE] = {
 	 25,  25,  25,  25,  25,  25,  25,  25,
 	  0,   0,   5,  10,  10,   5,   0,   0
 };
+
+// clang-format on
 
 int EvaluatePosition(const Board *board)
 {

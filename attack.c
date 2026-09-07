@@ -2,11 +2,15 @@
 
 //// Attack ////
 
+// clang-format off
+
 // Attack directions
-const int KnightAttackDirections[8] = { -21, -19, -12, -8, 8, 12, 19, 21 };
-const int BishopAttackDirections[4] = { -11, -9, 9, 11 };
-const int RookAttackDirections[4] = { -1, -10, 1, 10 };
-const int QueenAttackDirections[8] = { -11, -10, -9, -1, 1, 9, 10, 11 };
+const int KnightAttackDirections[8] = { -21, -19, -12,  -8,   8,  12,  19,  21 };
+const int BishopAttackDirections[4] = { -11,  -9,   9,  11 };
+const int RookAttackDirections[4]   = {  -1, -10,   1,  10 };
+const int QueenAttackDirections[8]  = { -11, -10,  -9,  -1,   1,   9,  10,  11 };
+
+// clang-format on
 
 // Check if position is attacked
 int IsPositionAttacked(const int position, const int side, const Board *board)

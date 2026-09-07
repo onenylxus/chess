@@ -5,30 +5,34 @@
 
 //// Move Generation ////
 
+// clang-format off
+
 // Loop for sliding pieces
-const int SlidingLoopPieces[8] = {WHITE_BISHOP, WHITE_ROOK, WHITE_QUEEN, EMPTY, BLACK_BISHOP, BLACK_ROOK, BLACK_QUEEN, EMPTY};
-const int SlidingLoopSideIndex[2] = {0, 4};
+const int SlidingLoopPieces[8] = { WHITE_BISHOP, WHITE_ROOK, WHITE_QUEEN, EMPTY, BLACK_BISHOP, BLACK_ROOK, BLACK_QUEEN, EMPTY };
+const int SlidingLoopSideIndex[2] = { 0, 4 };
 
 // Loop for non-sliding pieces
-const int NonSlidingLoopPieces[6] = {WHITE_KNIGHT, WHITE_KING, EMPTY, BLACK_KNIGHT, BLACK_KING, EMPTY};
-const int NonSlidingLoopSideIndex[2] = {0, 3};
+const int NonSlidingLoopPieces[6] = { WHITE_KNIGHT, WHITE_KING, EMPTY, BLACK_KNIGHT, BLACK_KING, EMPTY };
+const int NonSlidingLoopSideIndex[2] = { 0, 3 };
 
 // Piece directions
 const int PieceDirections[PIECE_SIZE][8] = {
-	{  0,   0,   0,   0,   0,   0,   0,   0}, // EMPTY
-	{  0,   0,   0,   0,   0,   0,   0,   0}, // WHITE_PAWN
-	{-21, -19, -12,  -8,   8,  12,  19,  21}, // WHITE_KNIGHT
-	{-11,  -9,   9,  11,   0,   0,   0,   0}, // WHITE_BISHOP
-	{-10,  -1,   1,  10,   0,   0,   0,   0}, // WHITE_ROOK
-	{-11, -10,  -9,  -1,   1,   9,  10,  11}, // WHITE_QUEEN
-	{-11, -10,  -9,  -1,   1,   9,  10,  11}, // WHITE_KING
-	{  0,   0,   0,   0,   0,   0,   0,   0}, // BLACK_PAWN
-	{-21, -19, -12,  -8,   8,  12,  19,  21}, // BLACK_KNIGHT
-	{-11,  -9,   9,  11,   0,   0,   0,   0}, // BLACK_BISHOP
-	{-10,  -1,   1,  10,   0,   0,   0,   0}, // BLACK_ROOK
-	{-11, -10,  -9,  -1,   1,   9,  10,  11}, // BLACK_QUEEN
-	{-11, -10,  -9,  -1,   1,   9,  10,  11}, // BLACK_KING
+	{   0,   0,   0,   0,   0,   0,   0,   0 }, // EMPTY
+	{   0,   0,   0,   0,   0,   0,   0,   0 }, // WHITE_PAWN
+	{ -21, -19, -12,  -8,   8,  12,  19,  21 }, // WHITE_KNIGHT
+	{ -11,  -9,   9,  11,   0,   0,   0,   0 }, // WHITE_BISHOP
+	{ -10,  -1,   1,  10,   0,   0,   0,   0 }, // WHITE_ROOK
+	{ -11, -10,  -9,  -1,   1,   9,  10,  11 }, // WHITE_QUEEN
+	{ -11, -10,  -9,  -1,   1,   9,  10,  11 }, // WHITE_KING
+	{   0,   0,   0,   0,   0,   0,   0,   0 }, // BLACK_PAWN
+	{ -21, -19, -12,  -8,   8,  12,  19,  21 }, // BLACK_KNIGHT
+	{ -11,  -9,   9,  11,   0,   0,   0,   0 }, // BLACK_BISHOP
+	{ -10,  -1,   1,  10,   0,   0,   0,   0 }, // BLACK_ROOK
+	{ -11, -10,  -9,  -1,   1,   9,  10,  11 }, // BLACK_QUEEN
+	{ -11, -10,  -9,  -1,   1,   9,  10,  11 }, // BLACK_KING
 };
+
+// clang-format on
 
 // Number of directions
 const int NumDirections[PIECE_SIZE] = {

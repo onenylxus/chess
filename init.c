@@ -2,6 +2,8 @@
 
 //// Init ////
 
+// clang-format off
+
 // Random u64 value generator
 #define RAND_U64 (               \
 	(u64)rand() +                \
@@ -10,6 +12,8 @@
 	((u64)rand() << 45) +        \
 	(((u64)rand() & 0x0f) << 60) \
 )
+
+// clang-format on
 
 int PositionToIndex[POSITION_SIZE];
 int IndexToPosition[INDEX_SIZE];

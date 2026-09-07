@@ -4,6 +4,8 @@
 
 //// Constants ////
 
+// clang-format off
+
 #define DEBUG                                                                // Debug mode
 #define NAME "Chess Engine"                                                  // Engine name
 
@@ -19,6 +21,8 @@
 #define MAX_DEPTH 64                                                         // Maximum search depth
 
 #define FEN_SETUP "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" // Setup state in FEN notation
+
+// clang-format on
 
 //// Type Definitions ////
 
@@ -88,6 +92,8 @@ enum Rank
 	RANK_X
 };
 
+// clang-format off
+
 // Position
 enum Position
 {
@@ -102,6 +108,8 @@ enum Position
 	XX
 };
 
+// clang-format on
+
 // Castling
 enum Castling
 {
@@ -112,6 +120,8 @@ enum Castling
 };
 
 //// Structures ////
+
+// clang-format off
 
 // Record
 typedef struct
@@ -192,7 +202,11 @@ typedef struct
 	int stopped;   // Stopped search flag
 } SearchInfo;
 
+// clang-format on
+
 //// Macros ////
+
+// clang-format off
 
 // Assert function
 #ifndef DEBUG
@@ -247,6 +261,8 @@ extern u64 ClearMask[INDEX_SIZE];                // Bitboard clear bit mask valu
 extern u64 PieceKeys[PIECE_SIZE][POSITION_SIZE]; // Hash key for each piece type and position
 extern u64 SideKey;                              // Hash key for player side
 extern u64 CastleKeys[CASTLE_SIZE];              // Hash key for each castling permutation
+
+// clang-format on
 
 //// External functions ////
 
