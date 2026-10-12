@@ -23,7 +23,28 @@ static int IsRepeated(const Board *board)
 
 static void ClearForSearch(Board *board, SearchInfo *info)
 {
-	// IMPLEMENT
+	for (int piece = 0; piece < PIECE_SIZE; ++piece)
+	{
+		for (int position = 0; position < POSITION_SIZE; ++position)
+		{
+			board->searchHistory[piece][position] = 0;
+		}
+	}
+
+	for (int move = 0; move < 2; ++move)
+	{
+		for (int depth = 0; depth < MAX_DEPTH; ++depth)
+		{
+			board->searchKillers[move][depth] = 0;
+		}
+	}
+
+	ClearPVTable(board->pvTable);
+	board->currentPly = 0;
+
+	info->startTime = GetTimeInMs();
+	info->stopped = FALSE;
+	info->nodes = 0;
 }
 
 static int Quiescence(Board *board, SearchInfo *info, int alpha, int beta)

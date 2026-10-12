@@ -338,6 +338,7 @@ extern int GetTimeInMs();
 
 // pvtable.c
 extern int GetPVLine(const int depth, Board *board);
+extern void ClearPVTable(PVTable *pvTable);
 extern void InitPVTable(PVTable *pvTable);
 extern void StorePVEntry(Board *board, const int move);
 extern int ProbePVTable(Board *board);
