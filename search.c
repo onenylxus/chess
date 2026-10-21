@@ -61,5 +61,23 @@ static int AlphaBeta(Board *board, SearchInfo *info, int alpha, int beta, int de
 
 void SearchPosition(Board *board, SearchInfo *info)
 {
-	// IMPLEMENT
+	int bestMove = NOMOVE;
+	int bestScore = -AB_BOUND;
+	int pvMoves = 0;
+
+	ClearForSearch(board, info);
+
+	for (int depth = 1; depth <= info->depth; ++depth)
+	{
+		bestScore = AlphaBeta(board, info, -AB_BOUND, AB_BOUND, depth, TRUE);
+		pvMoves = GetPVLine(depth, board);
+		bestMove = board->pvArray[0];
+
+		printf("Depth: %d, score: %d, move: %s, nodes: %ld, pv", depth, bestScore, PrintMove(bestMove), info->nodes);
+		for (int i = 0; i < pvMoves; ++i)
+		{
+			printf(" %s", PrintMove(board->pvArray[i]));
+		}
+		printf("\n");
+	}
 }

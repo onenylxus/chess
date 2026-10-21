@@ -19,6 +19,7 @@
 #define MAX_MOVES 2048                                                       // Maximum number of moves
 #define MAX_CHOICES 256                                                      // Maximum number of choices
 #define MAX_DEPTH 64                                                         // Maximum search depth
+#define AB_BOUND 30000                                                       // Maximum absolute score for alpha-beta
 
 #define FEN_SETUP "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1" // Setup state in FEN notation
 
