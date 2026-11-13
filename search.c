@@ -55,8 +55,71 @@ static int Quiescence(Board *board, SearchInfo *info, int alpha, int beta)
 
 static int AlphaBeta(Board *board, SearchInfo *info, int alpha, int beta, int depth, int doNull)
 {
-	// IMPLEMENT
-	return 0;
+	CheckBoard(board);
+
+	if (depth == 0)
+	{
+		info->nodes++;
+		return EvaluatePosition(board);
+	}
+
+	info->nodes++;
+
+	if (IsRepeated(board) || board->fiftyMoves >= 100)
+	{
+		return 0;
+	}
+
+	if (board->currentPly > MAX_DEPTH - 1)
+	{
+		return EvaluatePosition(board);
+	}
+
+	MoveList list[1];
+	GenerateAllMoves(board, list);
+
+	int prevAlpha = alpha;
+	int legalMoveCount = 0;
+	int bestMove = NOMOVE;
+	int score = -AB_BOUND;
+
+	for (int i = 0; i < list->count; ++i)
+	{
+		if (!MakeMove(board, list->moves[i].move))
+		{
+			continue;
+		}
+
+		legalMoveCount++;
+		score = -AlphaBeta(board, info, -beta, -alpha, depth - 1, TRUE);
+		UnmakeMove(board);
+
+		if (score > alpha)
+		{
+			if (score >= beta)
+			{
+				return beta;
+			}
+			alpha = score;
+			bestMove = list->moves[i].move;
+		}
+	}
+
+	if (legalMoveCount == 0)
+	{
+		if (IsPositionAttacked(board->kings[board->side], board->side ^ 1, board))
+		{
+			return -MATE + board->currentPly;
+		}
+		return 0;
+	}
+
+	if (alpha != prevAlpha)
+	{
+		StorePVEntry(board, bestMove);
+	}
+
+	return alpha;
 }
 
 void SearchPosition(Board *board, SearchInfo *info)
